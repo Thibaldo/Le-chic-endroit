@@ -9,14 +9,14 @@ import Foundation
 
 struct ProductService {
     static func fetchProductList(completion: @escaping([Product]) -> Void) {
-        let url = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!
-          URLSession.shared.fetchData(for: url) { (result: Result<[Product], Error>) in
+        let url = URL(string: LISTING_URL)!
+        URLSession.shared.fetchData(for: url) { (result: Result<[Product], Error>) in
             switch result {
             case .success(let productList):
-              completion(productList)
+                completion(productList)
             case .failure(let error):
-              print(error)
-          }
+                print(error)
+            }
         }
     }
 }

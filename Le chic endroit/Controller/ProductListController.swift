@@ -9,8 +9,8 @@ import UIKit
 
 class ProductListController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var collectionViewA: UICollectionView!
-    var collectionViewB: UICollectionView!
+    var categoryCollectionView: UICollectionView!
+    var productCollectionView: UICollectionView!
     
     var productList = [Product]()
     var categoryList = [Category]()
@@ -25,30 +25,26 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let layout = ProductListController.createLayout()
         
         
-        collectionViewA = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        collectionViewB = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        categoryCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        productCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         
         
+        categoryCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        categoryCollectionView.dataSource = self
+        categoryCollectionView.delegate = self
         
+        productCollectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
+        productCollectionView.dataSource = self
+        productCollectionView.delegate = self
         
-        collectionViewA.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
-        collectionViewA.dataSource = self
-        collectionViewA.delegate = self
-        
-        collectionViewB.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
-        collectionViewB.dataSource = self
-        collectionViewB.delegate = self
-        
-        view.addSubview(collectionViewA)
-        view.addSubview(collectionViewB)
+        view.addSubview(categoryCollectionView)
+        view.addSubview(productCollectionView)
         
         
         fetchProductList()
@@ -66,6 +62,7 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
                 let section = NSCollectionLayoutSection(group: group)
                 
                 section.orthogonalScrollingBehavior = .continuous
+                
                 return section
             }
             
@@ -87,20 +84,16 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
             return productList
         }
         
-
-        
         return productList.filter { product in
             return product.categoryId == selectedCategory
         }
     }
     
-    
-    // MARK: - API
     func fetchProductList() {
         ProductService.fetchProductList { productList in
             DispatchQueue.main.async {
                 self.productList = productList
-                self.collectionViewB.reloadData()
+                self.productCollectionView.reloadData()
             }
         }
     }
@@ -109,7 +102,7 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
         CategoryService.fetchCategoryList { categoryList in
             DispatchQueue.main.async {
                 self.categoryList = categoryList
-                self.collectionViewA.reloadData()
+                self.categoryCollectionView.reloadData()
             }
         }
     }
@@ -131,12 +124,12 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.section == 0 {
-            let cell = collectionViewA.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+            let cell = categoryCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
             cell.viewModel = CategoryViewModel(category: categoryList[indexPath.row], isSelected: selectedCategory == categoryList[indexPath.row].id)
             return cell
         }
         
-        let cell = collectionViewB.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
+        let cell = productCollectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
         cell.viewModel = ProductViewModel(product: filterProducts()[indexPath.row])
         
         return cell
@@ -150,7 +143,7 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
                 selectedCategory = categoryList[indexPath.row].id
             }
             
-            collectionViewB.reloadItems(at: [indexPath])
+            productCollectionView.reloadItems(at: [indexPath])
         } else {
             let controller = ProductViewController(product: ProductViewModel(product: filterProducts()[indexPath.row]))
             

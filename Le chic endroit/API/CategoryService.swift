@@ -9,14 +9,14 @@ import Foundation
 
 struct CategoryService {
     static func fetchCategoryList(completion: @escaping([Category]) -> Void) {
-        let url = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json")!
-          URLSession.shared.fetchData(for: url) { (result: Result<[Category], Error>) in
+        let url = URL(string: CATEGORIES_URL)!
+        URLSession.shared.fetchData(for: url) { (result: Result<[Category], Error>) in
             switch result {
             case .success(let categoryList):
-              completion(categoryList)
+                completion(categoryList)
             case .failure(let error):
-              print(error)
-          }
+                print(error)
+            }
         }
     }
 }

@@ -23,9 +23,12 @@ struct ProductViewModel {
     }
     
     var price: String {
-        return product.price.formatted(
-            .currency(code:"EUR").locale(Locale(identifier: Locale.current.identifier))
-        )
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "EUR"
+        
+        return formatter.string(from: NSNumber(value: product.price)) ?? ""
     }
     
     var creationDate: String? {
@@ -33,7 +36,11 @@ struct ProductViewModel {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         if let date = formatter.date(from: product.creationDate) {
-            return date.formatted(date: .abbreviated, time: .omitted)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .none
+            
+            return dateFormatter.string(from: date)
         }
         return ""
     }

@@ -62,7 +62,7 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
                 let item = NSCollectionLayoutItem.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
                 item.contentInsets.leading = 10
                 item.contentInsets.trailing = 10
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.30), heightDimension: .fractionalHeight(0.06)), subitems: [item])
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.30), heightDimension: .fractionalHeight(0.05)), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 
                 section.orthogonalScrollingBehavior = .continuous
@@ -87,7 +87,7 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
             return productList
         }
         
-        print("OK")
+
         
         return productList.filter { product in
             return product.categoryId == selectedCategory
@@ -130,11 +130,9 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        print(indexPath.section)
-        
         if indexPath.section == 0 {
             let cell = collectionViewA.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
-            cell.viewModel = CategoryViewModel(category: categoryList[indexPath.row])
+            cell.viewModel = CategoryViewModel(category: categoryList[indexPath.row], isSelected: selectedCategory == categoryList[indexPath.row].id)
             return cell
         }
         
@@ -152,9 +150,9 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
                 selectedCategory = categoryList[indexPath.row].id
             }
             
-            collectionViewB.reloadData()
+            collectionViewB.reloadItems(at: [indexPath])
         } else {
-            let controller = ProductController(product: ProductViewModel(product: productList[indexPath.row]))
+            let controller = ProductController(product: ProductViewModel(product: filterProducts()[indexPath.row]))
             navigationController?.pushViewController(controller, animated: true)
         }
     }

@@ -9,6 +9,7 @@ import Foundation
 
 struct CategoryViewModel {
     private let category: Category
+    private var _isSelected: Bool
     
     var id: Int {
         return category.id
@@ -19,12 +20,12 @@ struct CategoryViewModel {
     }
     
     var isSelected: Bool {
-        return category.isSelected
+        return _isSelected
     }
     
-
-    
-    init(category: Category) {
+    init(category: Category, isSelected: Bool?) {
         self.category = category
+        
+        self._isSelected = isSelected ?? false
     }
 }

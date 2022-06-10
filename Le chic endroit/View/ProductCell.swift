@@ -53,7 +53,9 @@ class ProductCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = .lightGray
         
+
         addSubview(productImageView)
         productImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: -10, paddingRight: -10)
 
@@ -82,8 +84,8 @@ class ProductCell: UICollectionViewCell {
 
         productImageView.imageFromServerURL(viewModel.imagesUrl?.thumb ?? "", placeHolder: UIImage(named: "camera"))
         productImageView.layer.cornerRadius = 20
-        productImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.6).isActive = true
-        productImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
+        productImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.75).isActive = true
+        productImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
         
         
         if (viewModel.isUrgent == true) {

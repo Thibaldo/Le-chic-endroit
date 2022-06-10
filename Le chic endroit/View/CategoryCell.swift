@@ -13,13 +13,16 @@ class CategoryCell: UICollectionViewCell {
     
     var viewModel: CategoryViewModel? {
         didSet {
-            backgroundColor = .red
+            
+            backgroundColor = .systemBackground
+            
             layer.cornerRadius = 10;
             layer.masksToBounds = true;
             layer.borderWidth = 3
             layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.8)
 
             addSubview(nameLabel)
+            
             nameLabel.text = viewModel?.name
             nameLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
             nameLabel.heightAnchor.constraint(equalTo: heightAnchor).isActive = true

@@ -16,9 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         let nav = UINavigationController()
-        let layout = UICollectionViewFlowLayout()
         
-        nav.viewControllers = [ProductListController(collectionViewLayout: layout)]
+        nav.viewControllers = [ProductListController()]
         
         window = UIWindow(windowScene: scene)
         window?.rootViewController = nav

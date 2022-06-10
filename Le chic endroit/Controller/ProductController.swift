@@ -10,7 +10,7 @@ import UIKit
 class ProductController: UIViewController {
     
     // MARK: - Properties
-    private var product: Product
+    private var product: ProductViewModel
     
     private let productImageView: UIImageView = {
         let iv = UIImageView()
@@ -93,7 +93,7 @@ class ProductController: UIViewController {
     
     // MARK: - Lifecycle
     
-    init(product: Product) {
+    init(product: ProductViewModel) {
         self.product = product
         super.init(nibName: nil, bundle: nil)
     }
@@ -104,7 +104,7 @@ class ProductController: UIViewController {
         view.backgroundColor = UIColor(red: 249, green: 249, blue: 249, alpha: 1)
         
         view.addSubview(productImageView)
-        productImageView.imageFromServerURL(product.imagesUrl.thumb ?? "", placeHolder: UIImage(named: "camera"))
+        productImageView.imageFromServerURL(product.imagesUrl?.thumb ?? "", placeHolder: UIImage(named: "camera"))
         productImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
         productImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).isActive = true
         
@@ -131,7 +131,7 @@ class ProductController: UIViewController {
         view.addSubview(dateLabel)
         dateLabel.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, paddingTop: 25, paddingLeft: 20)
         
-        priceLabel.text = "10.00€"
+        priceLabel.text = product.price
         view.addSubview(priceLabel)
         priceLabel.anchor(top: titleLabel.bottomAnchor, left: dateLabel.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingRight: 20)
 

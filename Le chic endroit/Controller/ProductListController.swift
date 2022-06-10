@@ -7,100 +7,139 @@
 
 import UIKit
 
-class ProductListController: UICollectionViewController {
+class ProductListController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    var collectionViewA: UICollectionView!
+    var collectionViewB: UICollectionView!
     
     var productList = [Product]()
     var categoryList = [Category]()
     
-        // MARK: - Lifecycle
+    //    init() {
+    //        super.init(collectionViewLayout: ProductListController.createLayout())
+    //    }
     
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            configureUI()
-            fetchProductList()
-            fetchCategoryList()
-        }
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
     
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            navigationController?.setNavigationBarHidden(true, animated: animated)
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-        override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            navigationController?.setNavigationBarHidden(false, animated: animated)
-        }
+    // MARK: - Lifecycle
     
-        // MARK: - API
-        func fetchProductList() {
-            ProductService.fetchProductList { productList in
-                DispatchQueue.main.async {
-                    self.productList = productList
-                    self.collectionView.reloadData()
-                }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let layout = ProductListController.createLayout()
+        
+        
+        collectionViewA = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        collectionViewB = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        
+        
+        
+        
+        collectionViewA.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        collectionViewA.dataSource = self
+        collectionViewA.delegate = self
+        
+        collectionViewB.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
+        collectionViewB.dataSource = self
+        collectionViewB.delegate = self
+        
+        view.addSubview(collectionViewA)
+        view.addSubview(collectionViewB)
+        
+        
+        fetchProductList()
+        fetchCategoryList()
+    }
+    
+    static func createLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            
+            if sectionNumber == 0 {
+                let item = NSCollectionLayoutItem.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+                item.contentInsets.leading = 10
+                item.contentInsets.trailing = 10
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.30), heightDimension: .fractionalHeight(0.06)), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                
+                section.orthogonalScrollingBehavior = .continuous
+                return section
             }
+            
+            
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1)))
+            item.contentInsets.trailing = 10
+            item.contentInsets.top = 10
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.4)), subitems: [item])
+            group.contentInsets.leading = 10
+            group.contentInsets.trailing = 10
+            let section = NSCollectionLayoutSection(group: group)
+            
+            return section
         }
-    
-        func fetchCategoryList() {
-            CategoryService.fetchCategoryList { categoryList in
-                DispatchQueue.main.async {
-                    self.categoryList = categoryList
-                    self.collectionView.reloadData()
-                }
-            }
-        }
-    
-        // MARK: - Helpers
-    
-        func configureUI() {
-            collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
-        }
-    
     }
     
     
-    // MARK: - UICollectionViewDataSource
+    // MARK: - API
+            func fetchProductList() {
+                ProductService.fetchProductList { productList in
+                    DispatchQueue.main.async {
+                        self.productList = productList
+                        self.collectionViewB.reloadData()
+                    }
+                }
+            }
     
-    extension ProductListController {
-    
-        override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-                return productList.count
+    func fetchCategoryList() {
+        CategoryService.fetchCategoryList { categoryList in
+            DispatchQueue.main.async {
+                self.categoryList = categoryList
+                self.collectionViewA.reloadData()
+            }
         }
+    }
     
-        override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
     
-            cell.viewModel = ProductViewModel(product: productList[indexPath.row])
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return categoryList.count
+        }
+        
+        return productList.count
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        print(indexPath.section)
+        
+        if indexPath.section == 0 {
+            let cell = collectionViewA.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+            cell.viewModel = CategoryViewModel(category: categoryList[indexPath.row])
             return cell
         }
+        
+        let cell = collectionViewB.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
+        cell.viewModel = ProductViewModel(product: productList[indexPath.row])
+        
+        return cell
+    }
     
-        override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            let controller = ProductController(product: productList[indexPath.row])
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+        } else {
+            let controller = ProductController(product: ProductViewModel(product: productList[indexPath.row]))
             navigationController?.pushViewController(controller, animated: true)
         }
     }
-    
-    // MARK: - UICollectionViewDelegateFlowLayout
-    
-    extension ProductListController: UICollectionViewDelegateFlowLayout {
-    
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 1
-        }
-    
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return 1
-        }
-    
-    
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let width = (view.frame.width - 2) / 2
-            let height = width * 1.6
-    
-            return CGSize(width: width, height: height)
-        }
 }
-
-
 

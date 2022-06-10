@@ -20,29 +20,31 @@ class ProductCell: UICollectionViewCell {
     }
     
     private let productImageView: UIImageView = {
-        let iv = UIImageView()
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.isUserInteractionEnabled = true
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.secondaryLabel.cgColor
+        imageView.layer.cornerRadius = 20
         
-        return iv
+        return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .bold))
-        label.textColor = .label
-
-//        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = false
+        label.lineBreakMode = .byTruncatingTail
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 14, weight: .black))
+        
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .semibold))
         
         return label
     }()
@@ -52,13 +54,13 @@ class ProductCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         addSubview(productImageView)
         productImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: -10, paddingRight: -10)
-
+        
         addSubview(titleLabel)
         titleLabel.anchor(top: productImageView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 8)
-
+        
         addSubview(priceLabel)
         priceLabel.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, paddingTop: 10, paddingLeft: 8)
         
@@ -75,27 +77,14 @@ class ProductCell: UICollectionViewCell {
         guard let viewModel = viewModel else {
             return
         }
-
+        
         titleLabel.text = viewModel.title
         priceLabel.text = viewModel.price
-
-        productImageView.imageFromServerURL(viewModel.imagesUrl?.thumb ?? "", placeHolder: UIImage(named: "camera"))
-        productImageView.layer.cornerRadius = 20
+        
+        
+        productImageView.imageFromServerURL(viewModel.imagesUrl?.thumb ?? "", placeHolder: UIImage(named: "image-placeholder"))
         productImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.75).isActive = true
         productImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
         
-        
-        if (viewModel.isUrgent == true) {
-            let isUrgentImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20));
-
-            if let image = UIImage(systemName: "clock.badge.exclamationmark.fill")?.withRenderingMode(.alwaysTemplate) {
-                isUrgentImageView.image = image
-                isUrgentImageView.tintColor = .red
-            }
-
-            addSubview(isUrgentImageView)
-
-            isUrgentImageView.anchor(top: productImageView.topAnchor, right: productImageView.rightAnchor, paddingTop: 10, paddingRight: 20)
-        }
     }
 }

@@ -148,16 +148,16 @@ extension URLSession {
 }
 
 extension UIImageView {
-        func imageFromServerURL(_ URLString: String, placeHolder: UIImage?) {
-
+    func imageFromServerURL(_ URLString: String, placeHolder: UIImage?) {
+        
         self.image = nil
         //If imageurl's imagename has space then this line going to work for this
         let imageServerUrl = URLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-
+        
         if let url = URL(string: imageServerUrl) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-
+                
                 if error != nil {
                     print(error ?? "")
                     DispatchQueue.main.async {
@@ -168,8 +168,9 @@ extension UIImageView {
                 DispatchQueue.main.async {
                     if let data = data {
                         if let downloadedImage = UIImage(data: data) {
-                       
                             self.image = downloadedImage
+                        } else {
+                            self.image = placeHolder
                         }
                     }
                 }
@@ -179,7 +180,7 @@ extension UIImageView {
 }
 
 extension UIView {
-   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()
         mask.path = path.cgPath

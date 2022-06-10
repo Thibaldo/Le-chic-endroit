@@ -1,5 +1,7 @@
 # Le Chic Endroit
 
+![Hnet-image-2](https://user-images.githubusercontent.com/50548410/173060841-43f47528-48d0-4622-9b38-8a948a50b0d6.gif)
+
 Voici ma version du test demandé, merci pour votre temps, n'hésitez pas à me faire des retours! :smiley:
 
 ### :white_check_mark: Fonctionnalités présentes

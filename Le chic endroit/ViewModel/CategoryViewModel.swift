@@ -18,6 +18,12 @@ struct CategoryViewModel {
         return category.name
     }
     
+    var isSelected: Bool {
+        return category.isSelected
+    }
+    
+
+    
     init(category: Category) {
         self.category = category
     }

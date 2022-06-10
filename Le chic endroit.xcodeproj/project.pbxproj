@@ -10,7 +10,6 @@
 		152FA57E2851FD6000E77CA5 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FA57D2851FD6000E77CA5 /* CategoryCell.swift */; };
 		152FA5802851FE6400E77CA5 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FA57F2851FE6400E77CA5 /* Category.swift */; };
 		152FA5822851FFF300E77CA5 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FA5812851FFF300E77CA5 /* CategoryService.swift */; };
-		152FA5842852043F00E77CA5 /* CategoryListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FA5832852043F00E77CA5 /* CategoryListController.swift */; };
 		152FA586285204CA00E77CA5 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FA585285204CA00E77CA5 /* CategoryViewModel.swift */; };
 		152FA58A2852457800E77CA5 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FA5892852457800E77CA5 /* HeaderView.swift */; };
 		15978ADB284FA381002D37C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15978ADA284FA381002D37C5 /* AppDelegate.swift */; };
@@ -30,7 +29,6 @@
 		152FA57D2851FD6000E77CA5 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		152FA57F2851FE6400E77CA5 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		152FA5812851FFF300E77CA5 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
-		152FA5832852043F00E77CA5 /* CategoryListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListController.swift; sourceTree = "<group>"; };
 		152FA585285204CA00E77CA5 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		152FA5892852457800E77CA5 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		15978AD7284FA381002D37C5 /* Le chic endroit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Le chic endroit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,7 +113,6 @@
 			children = (
 				15978AF8284FE755002D37C5 /* ProductListController.swift */,
 				15978B0828510E21002D37C5 /* ProductController.swift */,
-				152FA5832852043F00E77CA5 /* CategoryListController.swift */,
 				152FA5892852457800E77CA5 /* HeaderView.swift */,
 			);
 			path = Controller;
@@ -229,7 +226,6 @@
 				15978ADD284FA381002D37C5 /* SceneDelegate.swift in Sources */,
 				15978AFF285000A9002D37C5 /* ProductService.swift in Sources */,
 				152FA58A2852457800E77CA5 /* HeaderView.swift in Sources */,
-				152FA5842852043F00E77CA5 /* CategoryListController.swift in Sources */,
 				15978AF9284FE755002D37C5 /* ProductListController.swift in Sources */,
 				152FA57E2851FD6000E77CA5 /* CategoryCell.swift in Sources */,
 				152FA5802851FE6400E77CA5 /* Category.swift in Sources */,

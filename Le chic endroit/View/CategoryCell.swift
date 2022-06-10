@@ -13,9 +13,6 @@ class CategoryCell: UICollectionViewCell {
     
     var viewModel: CategoryViewModel? {
         didSet {
-            
-            backgroundColor = .systemBackground
-            
             layer.cornerRadius = 10;
             layer.masksToBounds = true;
             layer.borderWidth = 3
@@ -26,7 +23,12 @@ class CategoryCell: UICollectionViewCell {
             nameLabel.text = viewModel?.name
             nameLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
             nameLabel.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+            
+            if let test = viewModel?.isSelected {
+                backgroundColor = test ? .red : .white
+            }
         }
+        
     }
     
     private let nameLabel: UILabel = {
@@ -38,7 +40,4 @@ class CategoryCell: UICollectionViewCell {
         
         return label
     }()
-    
-    func configure() {
-    }
 }

@@ -14,10 +14,8 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
     
     var productList = [Product]()
     var categoryList = [Category]()
+    var selectedCategory: Int?
     
-    //    init() {
-    //        super.init(collectionViewLayout: ProductListController.createLayout())
-    //    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -84,16 +82,28 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
+    func filterProducts() -> [Product] {
+        if selectedCategory == nil {
+            return productList
+        }
+        
+        print("OK")
+        
+        return productList.filter { product in
+            return product.categoryId == selectedCategory
+        }
+    }
+    
     
     // MARK: - API
-            func fetchProductList() {
-                ProductService.fetchProductList { productList in
-                    DispatchQueue.main.async {
-                        self.productList = productList
-                        self.collectionViewB.reloadData()
-                    }
-                }
+    func fetchProductList() {
+        ProductService.fetchProductList { productList in
+            DispatchQueue.main.async {
+                self.productList = productList
+                self.collectionViewB.reloadData()
             }
+        }
+    }
     
     func fetchCategoryList() {
         CategoryService.fetchCategoryList { categoryList in
@@ -114,7 +124,7 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
             return categoryList.count
         }
         
-        return productList.count
+        return filterProducts().count
         
     }
     
@@ -129,13 +139,20 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
         }
         
         let cell = collectionViewB.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
-        cell.viewModel = ProductViewModel(product: productList[indexPath.row])
+        cell.viewModel = ProductViewModel(product: filterProducts()[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
+            if selectedCategory == categoryList[indexPath.row].id {
+                selectedCategory = nil
+            } else {
+                selectedCategory = categoryList[indexPath.row].id
+            }
+            
+            collectionViewB.reloadData()
         } else {
             let controller = ProductController(product: ProductViewModel(product: productList[indexPath.row]))
             navigationController?.pushViewController(controller, animated: true)

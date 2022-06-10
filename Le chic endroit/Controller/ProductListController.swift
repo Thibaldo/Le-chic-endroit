@@ -152,7 +152,8 @@ class ProductListController: UIViewController, UICollectionViewDataSource, UICol
             
             collectionViewB.reloadItems(at: [indexPath])
         } else {
-            let controller = ProductController(product: ProductViewModel(product: filterProducts()[indexPath.row]))
+            let controller = ProductViewController(product: ProductViewModel(product: filterProducts()[indexPath.row]))
+            
             navigationController?.pushViewController(controller, animated: true)
         }
     }

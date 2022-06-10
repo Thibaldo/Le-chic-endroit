@@ -22,7 +22,7 @@
 		15978AFF285000A9002D37C5 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15978AFE285000A9002D37C5 /* ProductService.swift */; };
 		15978B012850014C002D37C5 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15978B002850014C002D37C5 /* Product.swift */; };
 		15978B0328500A70002D37C5 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15978B0228500A70002D37C5 /* ProductViewModel.swift */; };
-		15978B0928510E21002D37C5 /* ProductController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15978B0828510E21002D37C5 /* ProductController.swift */; };
+		15978B0928510E21002D37C5 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15978B0828510E21002D37C5 /* ProductViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +43,7 @@
 		15978AFE285000A9002D37C5 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		15978B002850014C002D37C5 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		15978B0228500A70002D37C5 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
-		15978B0828510E21002D37C5 /* ProductController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductController.swift; sourceTree = "<group>"; };
+		15978B0828510E21002D37C5 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				15978AF8284FE755002D37C5 /* ProductListController.swift */,
-				15978B0828510E21002D37C5 /* ProductController.swift */,
+				15978B0828510E21002D37C5 /* ProductViewController.swift */,
 				152FA5892852457800E77CA5 /* HeaderView.swift */,
 			);
 			path = Controller;
@@ -216,7 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				152FA586285204CA00E77CA5 /* CategoryViewModel.swift in Sources */,
-				15978B0928510E21002D37C5 /* ProductController.swift in Sources */,
+				15978B0928510E21002D37C5 /* ProductViewController.swift in Sources */,
 				15978B012850014C002D37C5 /* Product.swift in Sources */,
 				15978AFD284FF3DD002D37C5 /* Extensions.swift in Sources */,
 				152FA5822851FFF300E77CA5 /* CategoryService.swift in Sources */,

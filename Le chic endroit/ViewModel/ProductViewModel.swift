@@ -28,6 +28,16 @@ struct ProductViewModel {
         )
     }
     
+    var creationDate: String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        if let date = formatter.date(from: product.creationDate) {
+            return date.formatted(date: .abbreviated, time: .omitted)
+        }
+        return ""
+    }
+    
     var isUrgent: Bool {
         return product.isUrgent
     }
